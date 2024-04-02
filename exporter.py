@@ -2,7 +2,7 @@
 '''
     exporter module of ChemAuto program.Exporting PES plotting data.
     Developed by: Li Xilong 
-    Last update: 2027-04-01
+    Last update: 2027-04-02
 '''
 import os
 import sys
@@ -127,6 +127,9 @@ class PesExporter:
             raise  # Re-raise the exception so the calling code knows about it
         return data_pairs
 
+    '''
+        energies = alpha_energies + beta_energies
+    '''
     def extract_orbital_energies(self, file_path):
         nalpha = nbeta = None
         alpha_energies = []
@@ -383,7 +386,7 @@ class PesExporter:
             return
 
         all_line_data = []
-        all_adjusted_energy = [] 
+        all_adjusted_energies = [] 
         for filename, vde in data_pairs.items():
             print(f"Processing {filename} with VDE {vde}")
             save_path = os.path.join(folder_path, "overlay_data")
@@ -391,21 +394,22 @@ class PesExporter:
             fchk_file_path = os.path.join(folder_path, f'{filename}.fchk')
             
             energies, alpha_energies, beta_energies, homo = self.extract_orbital_energies(fchk_file_path)
-            adjusted_energies = [-energy + homo + vde for energy in alpha_energies + beta_energies]
-            adjusted_energies.sort()
-            cycle = [0, 1, None]
-            for energy in adjusted_energies:
-                all_line_data.append([energy, 0])
-                all_line_data.append([energy, 1])
-                all_line_data.append([energy, None])
+            #adjusted_energies = [-energy + homo + vde for energy in alpha_energies + beta_energies]
+            # adjusted energies
+            adjusted_energies = [-energy + homo + vde for energy in energies]
+            # add adjusted_energies to all_energies列表中
+            all_adjusted_energies.extend(adjusted_energies)
+        
+        all_adjusted_energies.sort()
+        cycle = [0, 1, None]
+        for energy in all_adjusted_energies:
+            all_line_data.append([energy, 0])
+            all_line_data.append([energy, 1])
+            all_line_data.append([energy, None])
  
-            for energy in energies:
-                adjusted_energy = -energy + homo + vde
-                all_adjusted_energy.append(adjusted_energy)
-                
         curvexpos = np.linspace(self.PES_Xlow, self.PES_Xhigh, self.npoints)
         PEScurve = np.zeros(self.npoints)
-        for energy in all_adjusted_energy:
+        for energy in all_adjusted_energies:
             gauss_c = self.PES_FWHM / 2.0 / np.sqrt(2 * np.log(2))
             gauss_a = self.PES_str / (gauss_c * np.sqrt(2 * np.pi))
             gauss_curve = gauss_a * np.exp(-(curvexpos - energy) ** 2 / (2 * gauss_c ** 2))
