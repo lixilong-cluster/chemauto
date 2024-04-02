@@ -385,7 +385,7 @@ class PesExporter:
         all_line_data = []
         all_adjusted_energy = [] 
         for filename, vde in data_pairs.items():
-            #print(f"Processing {filename} with VDE {vde}")
+            print(f"Processing {filename} with VDE {vde}")
             save_path = os.path.join(folder_path, "overlay_data")
             os.makedirs(save_path, exist_ok=True)
             fchk_file_path = os.path.join(folder_path, f'{filename}.fchk')
@@ -393,7 +393,6 @@ class PesExporter:
             energies, alpha_energies, beta_energies, homo = self.extract_orbital_energies(fchk_file_path)
             adjusted_energies = [-energy + homo + vde for energy in alpha_energies + beta_energies]
             adjusted_energies.sort()
-            all_line_data = []
             cycle = [0, 1, None]
             for energy in adjusted_energies:
                 all_line_data.append([energy, 0])
