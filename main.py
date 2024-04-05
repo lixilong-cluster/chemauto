@@ -1,7 +1,7 @@
 '''
     main module of ChemAuto program. Main entry point of the program.
     Developed by: Li Xilong
-    Last update : 2024-04-01
+    Last update : 2024-04-05
 '''
 import sys
 from datetime import datetime
@@ -15,7 +15,7 @@ from pylinkor import AutoDOS
 def main_menu():
     clean_logs()
     setup_logging()
-    logged_print('ChemAuto - An Automated Analysis Software for Cluster Chemistry. \nVersion: 5.1 \nRelease Date: 2024.04.01 \nDeveloper: Li Xilong \nHomepage: https://github.com/lixilong-cluster/chemauto \nUser mannul:')
+    logged_print('ChemAuto - An Automated Analysis Software for Cluster Chemistry. \nVersion: 5.2 \nRelease Date: 2024.04.05 \nDeveloper: Li Xilong \nHomepage:https://github.com/lixilong-cluster/chemauto \nUser mannul:')
     start_time = datetime.now()
     logged_print(f"\nProgram started at {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
     while True:
