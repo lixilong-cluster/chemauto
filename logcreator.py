@@ -50,6 +50,15 @@ def logged_print(*args, **kwargs):
     logging.info(message)
     print(*args, **kwargs)
 
+def global_exception_handler(exctype, value, traceback):
+    """
+        Global exception handling function
+    """
+    # Using logging.exception to provide a complete record of the exception information, including the stack trace.
+    logging.exception("Unhandled exception occurred", exc_info=(exctype, value, traceback))
+    sys.exit(1)
+
+
 if __name__ == "__main__":
     clean_logs()
 

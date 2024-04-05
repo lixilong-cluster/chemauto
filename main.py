@@ -3,7 +3,7 @@
     Developed by: Li Xilong
     Last update : 2024-04-01
 '''
-
+import sys
 from datetime import datetime
 from logcreator import *
 from analyzer import GaussianLogAnalyzer
@@ -15,7 +15,7 @@ from pylinkor import AutoDOS
 def main_menu():
     clean_logs()
     setup_logging()
-    logged_print('ChemAuto - An Automated Analysis Software for Cluster Chemistry. \nVersion: 5.1 \nRelease Date: 2024.04.01 \nDeveloper: Li Xilong \nHomepage:https://github.com/lixilong-cluster/chemauto \nUser mannul:')
+    logged_print('ChemAuto - An Automated Analysis Software for Cluster Chemistry. \nVersion: 5.1 \nRelease Date: 2024.04.01 \nDeveloper: Li Xilong \nHomepage: https://github.com/lixilong-cluster/chemauto \nUser mannul:')
     start_time = datetime.now()
     logged_print(f"\nProgram started at {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
     while True:
@@ -48,4 +48,6 @@ def main_menu():
     logged_print(f"Total duration: {minutes} minutes {seconds} seconds")
 
 if __name__ == "__main__":
+    setup_logging()
+    sys.excepthook = global_exception_handler
     main_menu()
