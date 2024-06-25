@@ -2,7 +2,7 @@
 ChemAuto - An Automated Analysis Software for Cluster Chemistry.
 ==============================================================================
 
-Version 5.1
+Version 5.2
 ==============================================================================
 
 Packaging
