@@ -2,7 +2,7 @@
 ChemAuto - An Automated Analysis Software for Cluster Chemistry.
 ==============================================================================
 
-Version 5.1
+Version 5.3
 ==============================================================================
 
 Packaging
@@ -15,7 +15,20 @@ using pyinstaller
 
 3.command:
 
-    pyinstaller --onefile --console --name ChemAuto --icon chemauto.ico --add-data "D:\Program Files\Python\Python311\Lib\site-packages\pymol\chempy;.\pymol\chempy" main.py
+    standard command:
+        pyinstaller --onefile --console --name ChemAuto --icon chemauto.ico --add-data "D:\Program Files\Python\Python311\Lib\site-packages\pymol\chempy;.\pymol\chempy" main.py
+
+    add logging:
+        pyinstaller --onefile --console --name ChemAuto --icon chemauto.ico --add-data "D:\Program Files\Python\Python311\Lib\site-packages\pymol\chempy;.\pymol\chempy" --log-level DEBUG main.py
+
+    exclude unecessary libs:
+        pyinstaller --onefile --console --name ChemAuto --icon chemauto.ico --add-data "D:\Program Files\Python\Python311\Lib\site-packages\pymol\chempy;.\pymol\chempy" --exclude-module PyQt5 --exclude-module IPython --exclude-module PIL --exclude-module bcrypt --exclude-module cryptography --exclude-module charset_normalizer --exclude-module jedi main.py
+        
+        pyinstaller --onefile --console --name ChemAuto --icon chemauto.ico --add-data "D:\Program Files\Python\Python311\Lib\site-packages\pymol\chempy;.\pymol\chempy" --exclude-module bcrypt --exclude-module cryptography --exclude-module charset_normalizer --exclude-module jedi main.py
+        
+        pyinstaller --onefile --console --name ChemAuto --icon chemauto.ico --add-data "D:\Program Files\Python\Python311\Lib\site-packages\pymol\chempy;.\pymol\chempy" --exclude-module bcrypt --exclude-module cryptography --exclude-module charset_normalizer --exclude-module jedi --log-level DEBUG --debug all main.py
+        
+
 
 4.open ChemAuto.spec file, add the following content to hiddenimports=[]
                     
@@ -89,3 +102,16 @@ using pyinstaller
 
 7. double click ChemAuto.exe to run it. 'chemauto_config.json' and 'chemauto.log' will be created automatically. 
 
+Error and Solution:
+    Error info: 
+        43535 INFO: Loading module hook 'hook-PySide6.py' from 'D:\\Program Files\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'...
+        Aborting build process due to attempt to collect multiple Qt bindings packages: attempting to run hook for 'PySide6', while hook for 'PyQt5' has already been run! PyInstaller does not support multiple Qt bindings packages in a frozen application - either ensure that the build environment has only one Qt bindings package installed, or exclude the extraneous bindings packages via the module exclusion mechanism (--exclude command-line option, or excludes list in the spec file).
+
+    Solution:
+        add "--exclude-module PyQt5" to pyinstaller command
+    
+    new command:
+        pyinstaller --onefile --console --name ChemAuto --icon chemauto.ico --add-data "D:\Program Files\Python\Python311\Lib\site-packages\pymol\chempy;.\pymol\chempy" --exclude-module PySide6 main.py
+        
+        pyinstaller --onefile --console --name ChemAuto --icon chemauto.ico --add-data "D:\Program Files\Python\Python311\Lib\site-packages\pymol\chempy;.\pymol\chempy" --exclude-module PySide6 --exclude-module PyQt5 main.py
+        
