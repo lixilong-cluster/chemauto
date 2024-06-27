@@ -12,7 +12,6 @@
     
 ### Fixed
     Use module lazy loading to speed up program load time 
-    Various bug fixes and improvements (this line can be customized based on specific fixes).
 
 
 ## [5.3] - 2024-06-25
@@ -21,7 +20,7 @@
     - Function 7: generation of atomic term symbols for single and mixed configurations.
     - Support for single configurations (e.g., p3, d2) and mixed configurations (e.g., s1p3, p5d4).
 ### Fixed
-    Various bug fixes and improvements (this line can be customized based on specific fixes).
+
 
 
 ## [5.2] - 2024-04-05
