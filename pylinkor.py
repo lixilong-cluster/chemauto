@@ -10,7 +10,6 @@
 '''
 
 import os
-import sys
 import time
 import json
 import logging
@@ -150,6 +149,7 @@ class AutoDOS():
         file_name = os.path.basename(os.path.dirname(curve_file_path))
         file_suffix = file_name.split('-')[-1] if '-' in file_name else file_name
         ogg_save_path = os.path.join(os.path.dirname(curve_file_path), f"{file_name}.ogg")
+        opju_save_path = os.path.join(os.path.dirname(curve_file_path), f"{file_name}.opju")
         # Start plotting
         s = time.time()
         op.new()

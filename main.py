@@ -2,7 +2,7 @@
 '''
     - Main module of ChemAuto program. Main entry point of the program.
     - Developed by: Li Xilong
-    - main.py == main_ver2.0.py
+    - main.py == main_ver2.1.py
 '''
 
 import os
@@ -17,7 +17,7 @@ def main_menu():
     start_time = datetime.now()
     logged_print(f"\nProgram started at {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
     while True:
-        choice = logged_input("\n 1. Log files analysis. \n 2. Extract Structures. \n 3. Create gjf files. \n 4. Generate PES plotting data. \n 5. Generate DOS in ogg format.\n 6. Convert .gjf to .xyz or extract opted sturc from .log and save as .xyz.\n 7. Generate atomic term symbol.\n")
+        choice = logged_input("\n 1. Log files analysis. \n 2. Extract Structures. \n 3. Create gjf files. \n 4. Generate PES plotting data. \n 5. Generate DOS in ogg and opju formats.\n 6. Convert .gjf to .xyz or extract opted sturc from .log and save as .xyz.\n 7. Generate atomic term symbol.\n")
         if choice == '1':
             from analyzer import GaussianLogAnalyzer
             analyzer = GaussianLogAnalyzer()
@@ -43,8 +43,8 @@ def main_menu():
             converter = Converter()
             converter.run()
         elif choice == '7':
-            from TermGen import TermSymbolGenerator
-            generator = TermSymbolGenerator()
+            from TermGen import AtomicTermSymbolGenerator
+            generator = AtomicTermSymbolGenerator()
             generator.run()
         elif choice.strip().lower() == 'q':
             logged_print("Exiting the program.")
