@@ -1,9 +1,9 @@
 
 '''
     ChemAuto program's submodule for generating term symbols
-    TermGen.py == TermGen_ver2.6.1.py
+    TermGen.py == TermGen_ver2.6.2.py
     Written by Li Xiiong
-    2024-06-25
+    2024-07-02
 '''
 
 import re
@@ -16,7 +16,7 @@ from fractions import Fraction
 from collections import defaultdict
 from logcreator import setup_logging, logged_input, logged_print
 
-class TermSymbolGenerator:
+class AtomicTermSymbolGenerator:
 
     def __init__(self):
         # Define the orbitals dictionary
@@ -193,7 +193,7 @@ class TermSymbolGenerator:
             L_S_dict[base_symbol] = (max_ml, max_ms)
             ml_ms_table = self.remove_combination(ml_ms_table, max_ml, max_ms)
         return L_S_dict
-    
+
     # Print term symbols ordered by Hund's rule
     def print_term_symbols(self, term_symbols, n_e, orb):
         print("Atomic term symbols (ordered by Hund's rule):")
@@ -204,7 +204,7 @@ class TermSymbolGenerator:
         for base_symbol, j_symbols in sorted_term_symbols:
             j_values = [float(Fraction(js[2:])) for js in j_symbols]
             if n_e < len(self.orbitals[orb]) / 2:
-                sorted_j_symbols = [j_symbol for _, j_symbol in sorted(zip(j_values, j_symbols))]
+                sorted_j_symbols = [j_symbol for _, j_symbol in sorted(zip(j_values, j_symbols), reverse=True)]
             else:
                 sorted_j_symbols = [j_symbol for _, j_symbol in sorted(zip(j_values, j_symbols), reverse=True)]
             re_sorted_term_symbols.append((base_symbol, sorted_j_symbols))
@@ -230,10 +230,10 @@ class TermSymbolGenerator:
         lowest_energy_term = re_sorted_term_symbols[-1][0]
         ground_state = re_sorted_term_symbols[0][1][0]
         logged_print("Ground state term symbol: " + ground_state + '\n')
-    
+
     def run(self):
         start_time = datetime.now() 
-        logging.info(f"Func 7 started at {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
+        logging.info(f"Func 6 started at {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
         while True:
             config = logged_input("Please input the configuration without n number (e.g., 'p2', 'd3', 's2p2', 'p2d1') or 'q' to quit:\n")
             if config.lower() == 'q' or config == 'exit':
@@ -259,13 +259,13 @@ class TermSymbolGenerator:
                 self.print_ground_state(combined_symbols)
     
         end_time = datetime.now()
-        logging.info(f"Func 7 ended at {end_time.strftime('%Y-%m-%d %H:%M:%S')}")
+        logging.info(f"Func 6 ended at {end_time.strftime('%Y-%m-%d %H:%M:%S')}")
         duration_seconds = int((end_time - start_time).total_seconds())
         minutes, seconds = divmod(duration_seconds, 60)
         logging.info(f"Total duration: {minutes} minutes {seconds} seconds")
     
 if __name__ == "__main__":
-     generator = TermSymbolGenerator()
+     generator = AtomicTermSymbolGenerator()
      generator.run()
     
     
