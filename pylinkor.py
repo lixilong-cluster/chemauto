@@ -10,6 +10,7 @@
 '''
 
 import os
+import sys
 import time
 import json
 import logging
@@ -167,7 +168,7 @@ class AutoDOS():
         if gp is None:
             logged_print("Failed to create graph. The returned object is None.")
             op.exit()
-            exit(1)
+            sys.exit(1)
         gl = gp[0]
         gl.add_plot(wks_curve, coly=1, colx=0, type='l')
         gl.add_plot(wks_line, coly=1, colx=0, type='l')
