@@ -3,7 +3,10 @@
     pylinkor module of ChemAuto program.
     Plotting DOS spectra using PES data exported from exporter module
     Developed by: Li Xilong
-    Last Updates：2024-04-05
+    Last Updates：2024-07-02
+    
+    pylinkor.py == pylinkor_ver1.3.py
+    
 '''
 
 import os
@@ -50,15 +53,13 @@ import originpro as op
     Example of displaying both short and long names in a window title:
         page.title = 3  # Show both short name and long name
 
-
-
 """
 
 class AutoDOS():
     def __init__(self):
         self.config_file_path = 'chemauto_config.json'
         self.default_config = {
-            "template_path": "D:\\Program Files\\OriginLab\\UserFiles\\DOS-default.otpu",
+            "template_path": "DOS-default.otpu",
             "default_x_range": [0, 3.3],
             "default_y_range": [-0.03, 6.5],
             "show_graph": False
@@ -91,7 +92,8 @@ class AutoDOS():
             logged_print("Parameter Error. Please input the required parameter.\n")
             while True:
                 if not curve_file_path:
-                    curve_file_path = logged_input("Input curve data file path (enter 'q' to return):\n")
+                    curve_file_path = logged_input("Input curve data file path (enter 'q' to return):\n").strip('"')
+                    print(curve_file_path)
                     if curve_file_path.strip().lower() == 'q':
                         return 'r'
                     elif not curve_file_path.endswith("_curve.txt"):
@@ -100,10 +102,10 @@ class AutoDOS():
                         continue
                     else:
                         break
-        
             while True:
                 if not line_file_path:
-                    line_file_path = logged_input("Input line data file path (enter 'q' to return):\n")
+                    line_file_path = logged_input("Input line data file path (enter 'q' to return):\n").strip('"')
+                    print(line_file_path)
                     if line_file_path.strip().lower() == 'q':
                         return 'r'
                     elif not line_file_path.endswith("_line.txt"):
@@ -123,13 +125,15 @@ class AutoDOS():
                 elif not x_range:
                     xlim_values = default_x_range
                     break
-            
+                else:
+                    logged_print(f"The x range you input is: {x_range}\n")
                 try:
                     # Split user input then transfer to float
                     start, end = map(float, x_range.split(','))
                     # Check range validation
                     if start < end and 0 <= start and end <= 5:
                         xlim_values = (start, end)
+                        #print(xlim_values)
                         break
                     else:
                         # Input again 
@@ -145,8 +149,6 @@ class AutoDOS():
         file_name = os.path.basename(os.path.dirname(curve_file_path))
         file_suffix = file_name.split('-')[-1] if '-' in file_name else file_name
         ogg_save_path = os.path.join(os.path.dirname(curve_file_path), f"{file_name}.ogg")
-        opju_save_path = os.path.join(os.path.dirname(curve_file_path), f"{file_name}.opju")
-
         # Start plotting
         s = time.time()
         op.new()
@@ -154,14 +156,18 @@ class AutoDOS():
         wb = op.find_book()
         wb.lname = f'{file_name}_wb'
         wb.name = wb.lname
-        wks = op.find_sheet().destroy()
         wks_curve = wb.add_sheet(name=f'{file_name}_curve')
         wks_curve.name = f'{file_name}_curve'
         wks_line = wb.add_sheet(name = f'{file_name}_line')
         wks_line.name = f'{file_name}_line'
+        op.find_sheet('w', f'[{wb.name}]sheet1').destroy()
         wks_curve.from_file(curve_file_path)
         wks_line.from_file(line_file_path)
         gp = op.new_graph(template = template_path)
+        if gp is None:
+            logged_print("Failed to create graph. The returned object is None.")
+            op.exit()
+            exit(1)
         gl = gp[0]
         gl.add_plot(wks_curve, coly=1, colx=0, type='l')
         gl.add_plot(wks_line, coly=1, colx=0, type='l')
@@ -180,7 +186,7 @@ class AutoDOS():
         op.save(f'{opju_save_path}')
         e = time.time()
         r = e - s
-        print("Time: {:.2f} seconds".format(r))
+        print("Elapsed time: {:.2f} seconds".format(r))
         if exit_origin:
             op.exit()
         
@@ -214,7 +220,6 @@ class AutoDOS():
                     continue
                 else:
                     break
-        
         default_x_range = self.config.get("default_x_range", [0, 3.3])
         while True:
             x_range = logged_input(f"Please input the x range of DOS spectrum in the format 'start,end' (default is {default_x_range[0]},{default_x_range[1]}):\n").strip()
