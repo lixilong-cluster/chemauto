@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Build outputs
+build/
+dist/
+release/
+*.spec.bak
+
+# User/runtime data
+*.log
+!test_data/**/*.log
+*.tmp
+*.bak
+*.xlsx
+*.xls
+*.csv
+*.png
+!assets/**/*.png
+!tools/reference_explorer/**/*.png
+!src/pymol/pymol_path/data/**/*.png
+*.ogg
+*.oggu
+*.opj
+*.opju
+*.fchk
+*.chk
+remote_formchk_profiles.json
+remote_formchk_config.ini
+chemauto_config.json
+
+# IDE/OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
