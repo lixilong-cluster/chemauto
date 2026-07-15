@@ -1,0 +1,5 @@
+PyInstaller==6.19.0
+PyQt5
+requests
+urllib3
+playwright

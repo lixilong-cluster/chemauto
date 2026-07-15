@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use ChemAuto in research, please cite the software repository and the associated work."
+title: "ChemAuto: An Automated Analysis Software for Cluster Chemistry"
+type: software
+authors:
+  - family-names: "Li"
+    given-names: "Xilong"
+version: "7.1.2"
+date-released: 2026-07-15
+repository-code: "https://github.com/lixilong-cluster/chemauto"
+url: "https://github.com/lixilong-cluster/chemauto"
+license: Apache-2.0

@@ -1,0 +1,13 @@
+PyInstaller==6.19.0
+PyQt6
+numpy
+pyqtgraph
+PyOpenGL
+openpyxl
+pandas
+requests
+prompt_toolkit
+originpro
+Pillow
+
+# PyMOL is bundled under src/pymol; no separate pip installation is required.

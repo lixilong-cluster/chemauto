@@ -1,0 +1,12 @@
+* text=auto
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+*.py text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.pyd binary
+*.dll binary
+*.ico binary
+*.otpu binary
+*.png binary
+*.pkl binary

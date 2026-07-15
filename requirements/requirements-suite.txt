@@ -1,0 +1,4 @@
+-r requirements-chemauto.txt
+-r requirements-reference-explorer.txt
+
+# PyMOL is bundled under src/pymol; no separate pip installation is required.
