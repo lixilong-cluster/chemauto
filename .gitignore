@@ -1,7 +1,11 @@
 # Python
 __pycache__/
-*.py[cod]
+*.pyc
 *.pyo
+
+# ChemAuto required PyMOL native module
+!src/pymol/_cmd.cp311-win_amd64.pyd
+
 .pytest_cache/
 .coverage
 htmlcov/
